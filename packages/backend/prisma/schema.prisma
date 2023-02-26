@@ -87,6 +87,8 @@ model Email {
   mesageId         String
   internetMesageId String
   conversationId   String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model ImapStep {
@@ -96,12 +98,16 @@ model ImapStep {
   flowId              Int               @unique
   flow                Flow              @relation(fields: [flowId], references: [id])
   imapStepRuns        ImapStepRun[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model ParameterType {
   id         Int         @id @default(autoincrement())
   name       String
   parameters Parameter[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model Parameter {
@@ -113,6 +119,8 @@ model Parameter {
   expressionId    Int
   expression      Expression    @relation(fields: [expressionId], references: [id])
   values          Value[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model Expression {
@@ -120,6 +128,8 @@ model Expression {
   name       String
   parameters Parameter[]
   steps      Step[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model Step {
@@ -136,12 +146,14 @@ model Step {
   predecessor  Step?      @relation("StepsOrder")
   stepRuns     StepRun[]
   values       Value[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model FlowRun {
   id              Int              @id @default(autoincrement())
-  startedAt       DateTime         @default(now())
-  finishedAt      DateTime         @default(now())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
   flowId          Int
   flow            Flow             @relation(fields: [flowId], references: [id])
   stepRuns        StepRun[]
@@ -152,7 +164,8 @@ model FlowRun {
 model StepRun {
   id          Int        @id @default(autoincrement())
   log         String
-  startedAt   DateTime   @default(now())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
   stepId      Int        @unique
   step        Step       @relation(fields: [stepId], references: [id])
   flowRunId   Int
@@ -171,12 +184,15 @@ model Value {
   stepId      Int
   step        Step       @relation(fields: [stepId], references: [id])
   valueRuns   ValueRun[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model ValueRun {
   id        Int      @id @default(autoincrement())
   data      String
-  startedAt DateTime @default(now())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
   valueId   Int
   value     Value    @relation(fields: [valueId], references: [id])
   stepRunId Int
@@ -189,6 +205,8 @@ model ImapStepRun {
   imapStep   ImapStep @relation(fields: [imapStepId], references: [id])
   flowRunId  Int      @unique
   flowRun    FlowRun  @relation(fields: [flowRunId], references: [id])
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model DataBaseData {
@@ -198,22 +216,26 @@ model DataBaseData {
   attributeType  String
   dataBaseStepId Int
   dataBaseStep   DataBaseStep @relation(fields: [dataBaseStepId], references: [id])
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model DataBaseStep {
   id                      Int                   @id @default(autoincrement())
   tableName               String
-  startedAt               DateTime              @default(now())
   databaseConfigurationId Int
   databaseConfiguration   DatabaseConfiguration @relation(fields: [databaseConfigurationId], references: [id])
   dataBaseData            DataBaseData[]
   dataBaseStepRuns         DataBaseStepRun[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model DataBaseStepRun {
   id             Int          @id @default(autoincrement())
   log            String
-  startedAt      DateTime     @default(now())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
   dataBaseStepId Int
   dataBaseStep   DataBaseStep @relation(fields: [dataBaseStepId], references: [id])
   flowRunId      Int          @unique
