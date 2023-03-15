@@ -8,13 +8,12 @@ export class AuthController {
 
   @Post('signup')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  signup(@Body('email') email: string, @Body('password') password: string) {
-    console.log(email, password);
-    return this.authService.signup();
+  signup(@Body() dto: AuthDto) {
+    return this.authService.signup(dto);
   }
 
   @Post('login')
-  signin() {
-    return this.authService.login();
+  signin(@Body() dto: AuthDto) {
+    return this.authService.login(dto);
   }
 }

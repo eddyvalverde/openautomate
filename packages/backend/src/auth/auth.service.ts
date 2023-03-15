@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { AuthDto } from './dto';
 
 @Injectable({})
 export class AuthService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  login() {
-    return { msg: 'I have logged up' };
+  login(dto: AuthDto) {
+    return {
+      msg: 'I have logged up- email:' + dto.email + ' password:' + dto.password,
+    };
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  signup() {
-    return { msg: 'I have signed in' };
+  signup(dto: AuthDto) {
+    return {
+      msg: 'I have signed in- email:' + dto.email + ' password:' + dto.password,
+    };
   }
 }
