@@ -16,6 +16,7 @@ export class AuthService {
         hash,
       },
     });
+    delete user.hash;
     return user;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
