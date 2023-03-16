@@ -31,6 +31,11 @@ export class AuthService {
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   signup(dto: AuthDto) {
+    //find user by email
+    //if user does not exist throw exception
+
+    //compare password
+    //if password is incorrect throw exception
     return {
       msg: 'I have signed in- email:' + dto.email + ' password:' + dto.password,
     };
