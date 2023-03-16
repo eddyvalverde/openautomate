@@ -50,6 +50,8 @@ model ImapConfiguration {
   userId    Int
   user      User       @relation(fields: [userId], references: [id])
   imapSteps ImapStep[]
+
+  @@map("imapConfigurations")
 }
 
 model DatabaseConfiguration {
@@ -65,6 +67,8 @@ model DatabaseConfiguration {
   userId       Int
   user         User           @relation(fields: [userId], references: [id])
   DataBaseStep DataBaseStep[]
+
+  @@map("databaseConfigurations")
 }
 
 model Flow {
@@ -77,6 +81,8 @@ model Flow {
   flowRuns  FlowRun[]
   imapStep  ImapStep?
   Step      Step[]
+
+  @@map("flows")
 }
 
 model Email {
@@ -89,6 +95,8 @@ model Email {
   conversationId   String
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("emails")
 }
 
 model ImapStep {
@@ -100,6 +108,8 @@ model ImapStep {
   imapStepRuns        ImapStepRun[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("imapSteps")
 }
 
 model ParameterType {
@@ -108,6 +118,8 @@ model ParameterType {
   parameters Parameter[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("parameterTypes")
 }
 
 model Parameter {
@@ -121,6 +133,8 @@ model Parameter {
   values          Value[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("parameters")
 }
 
 model Expression {
@@ -130,6 +144,8 @@ model Expression {
   steps      Step[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("expressions")
 }
 
 model Step {
@@ -148,6 +164,8 @@ model Step {
   values       Value[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("steps")
 }
 
 model FlowRun {
@@ -159,6 +177,8 @@ model FlowRun {
   stepRuns        StepRun[]
   imapStepRun     ImapStepRun?
   DataBaseStepRun DataBaseStepRun?
+
+  @@map("flowRun")
 }
 
 model StepRun {
@@ -174,6 +194,8 @@ model StepRun {
   successor   StepRun?   @relation("StepsRunOrder", fields: [successorId], references: [id])
   predecessor StepRun?   @relation("StepsRunOrder")
   valueRuns   ValueRun[]
+
+  @@map("stepRuns")
 }
 
 model Value {
@@ -186,6 +208,8 @@ model Value {
   valueRuns   ValueRun[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("values")
 }
 
 model ValueRun {
@@ -197,6 +221,8 @@ model ValueRun {
   value     Value    @relation(fields: [valueId], references: [id])
   stepRunId Int
   stepRun   StepRun  @relation(fields: [stepRunId], references: [id])
+
+  @@map("valueRuns")
 }
 
 model ImapStepRun {
@@ -207,6 +233,8 @@ model ImapStepRun {
   flowRun    FlowRun  @relation(fields: [flowRunId], references: [id])
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("imapStepRuns")
 }
 
 model DataBaseData {
@@ -218,6 +246,8 @@ model DataBaseData {
   dataBaseStep   DataBaseStep @relation(fields: [dataBaseStepId], references: [id])
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("dataBaseDatas")
 }
 
 model DataBaseStep {
@@ -229,6 +259,8 @@ model DataBaseStep {
   dataBaseStepRuns         DataBaseStepRun[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  @@map("dataBaseSteps")
 }
 
 model DataBaseStepRun {
@@ -240,4 +272,6 @@ model DataBaseStepRun {
   dataBaseStep   DataBaseStep @relation(fields: [dataBaseStepId], references: [id])
   flowRunId      Int          @unique
   flowRun        FlowRun      @relation(fields: [flowRunId], references: [id])
+
+  @@map("dataBaseStepRuns")
 }
