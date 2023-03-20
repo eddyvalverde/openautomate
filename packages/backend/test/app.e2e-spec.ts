@@ -103,7 +103,15 @@ describe('App e2e', () => {
   });
   describe('User', () => {
     describe('Get me', () => {
-      it.todo('should get current user information');
+      it('should get current user information', () => {
+        return pactum
+          .spec()
+          .get('/users/me')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
+      });
     });
     describe('Edit User', () => {
       it.todo('should edit current user');
