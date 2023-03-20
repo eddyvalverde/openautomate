@@ -27,22 +27,29 @@ describe('App e2e', () => {
     app.close();
   });
   describe('Auth', () => {
+    const dto: AuthDto = {
+      email: 'vlad@gmail.com',
+      password: '123',
+    };
     describe('SingUp', () => {
-      const dto: AuthDto = {
-        email: 'vlad@gmail.com',
-        password: '123',
-      };
       it('should SignUp', () => {
         return pactum
           .spec()
           .post('/auth/signup')
           .withBody(dto)
-          .expectStatus(201)
-          .inspect();
+          .expectStatus(201);
+        //.inspect()
       });
     });
     describe('Login', () => {
-      it.todo('should Login');
+      it('should Login', () => {
+        return pactum
+          .spec()
+          .post('/auth/login')
+          .withBody(dto)
+          .expectStatus(200);
+        //.inspect()
+      });
     });
   });
   describe('User', () => {
