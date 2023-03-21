@@ -117,7 +117,8 @@ describe('App e2e', () => {
     describe('Edit User', () => {
       it('should edit user', () => {
         const dto: EditUserDto = {
-          firstname: 'Eddy',
+          firstName: 'Eddy',
+          lastName: 'Valverde',
           email: 'eddy.valverde@outlook.com',
         };
         return pactum

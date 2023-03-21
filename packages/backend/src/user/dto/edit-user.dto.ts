@@ -4,7 +4,7 @@ export class EditUserDto {
   @IsEmail()
   email?: string;
   @IsString()
-  firstname?: string;
+  firstName?: string;
   @IsString()
-  lastname?: string;
+  lastName?: string;
 }
