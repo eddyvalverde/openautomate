@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import * as pactum from 'pactum';
 import { AuthDto } from '../src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
+import { CreateBookmarkDto, EditBookmarkDto } from 'src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -133,20 +134,94 @@ describe('App e2e', () => {
     });
   });
   describe('Bookmarks', () => {
+    describe('Get empty bookmarks', () => {
+      it('should get empty bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
     describe('Create bookmark', () => {
-      it.todo('should create a bookmark');
+      it('should create a bookmark', () => {
+        const dto: CreateBookmarkDto = {
+          title: 'This is a test title',
+          description: 'This is a test description',
+          link: 'https://www.test.com/thisisatestlink',
+        };
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('bookmarkId', 'id')
+          .inspect();
+      });
     });
     describe('Get bookmarks', () => {
-      it.todo('should get all bookmarks');
+      it('should get all bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(1);
+      });
     });
     describe('Get bookmark by id', () => {
-      it.todo('should get bookmark by id');
+      it('should get bookmark by id', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{bookmarkId}');
+      });
     });
     describe('Edit Bookmark', () => {
-      it.todo('should edit bookmark details');
+      const dto: EditBookmarkDto = {
+        title:
+          'Kubernetes Course - Full Beginners Tutorial (Containerize Your Apps!)',
+        description:
+          'Learn how to use Kubernetes in this complete course. Kubernetes makes it possible to containerize applications and simplifies app deployment to production.',
+      };
+      it('should edit bookmark', () => {
+        return pactum
+          .spec()
+          .patch('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.title)
+          .expectBodyContains(dto.description);
+      });
     });
     describe('Delete Bookmark', () => {
-      it.todo('should delete bookmark');
+      it('should delete bookmark', () => {
+        return pactum
+          .spec()
+          .delete('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(204);
+      });
     });
   });
 
