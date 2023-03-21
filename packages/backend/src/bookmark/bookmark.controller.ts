@@ -40,17 +40,14 @@ export class BookmarkController {
   }
 
   @Patch(':id')
-  editBookmarkById(
-    @GetUser('id') userId: number,
-    @Body() dto: EditBookmarkDto,
-  ) {
-    return this.bookMarkService.editBookmarkById(userId, dto);
+  editBookmarkById(@GetUser('id') userId: number, @Body() bookmarkId: number) {
+    return this.bookMarkService.editBookmarkById(userId, bookmarkId);
   }
 
   @Delete(':id')
   deleteBookmarkById(
     @GetUser('id') userId: number,
-    @Param('id', ParseIntPipe) bookmarkId: number
+    @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
     return this.bookMarkService.deleteBookmarkById(userId, bookmarkId);
   }
