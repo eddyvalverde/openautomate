@@ -164,7 +164,16 @@ describe('App e2e', () => {
       });
     });
     describe('Get bookmarks', () => {
-      it.todo('should get all bookmarks');
+      it('should get all bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(1);
+      });
     });
     describe('Get bookmark by id', () => {
       it.todo('should get bookmark by id');
