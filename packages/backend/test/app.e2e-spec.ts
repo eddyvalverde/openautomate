@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import * as pactum from 'pactum';
 import { AuthDto } from '../src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
+import { CreateBookmarkDto } from 'src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -146,7 +147,21 @@ describe('App e2e', () => {
       });
     });
     describe('Create bookmark', () => {
-      it.todo('should create a bookmark');
+      it('should create a bookmark', () => {
+        const dto: CreateBookmarkDto = {
+          title: 'This is a test title',
+          description: 'This is a test description',
+          link: 'https://www.test.com/thisisatestlink',
+        };
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201);
+      });
     });
     describe('Get bookmarks', () => {
       it.todo('should get all bookmarks');
