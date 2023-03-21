@@ -14,5 +14,8 @@ export class UserService {
         ...dto,
       },
     });
+    delete user.hash;
+
+    return user;
   }
 }
